@@ -6,7 +6,7 @@ create {ANY}
 feature {}
    make
       local
-         t: TIME; string: STRING
+         t: TIME
       do
          t.update
          time_in_japanese.set_time(t)
