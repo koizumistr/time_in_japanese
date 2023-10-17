@@ -56,7 +56,7 @@ feature {ANY}
 
    month_in (buffer: STRING)
       do
-         buffer.append(time.month.to_string + "月")
+         buffer.append(time.month.to_string + once "月")
       end
 
    append_in (buffer: STRING)
@@ -66,23 +66,23 @@ feature {ANY}
          if japanese_calendar_mode then
             shouwa := time.year - 1925
             if shouwa < 64 then
-               buffer.append("昭和" + shouwa.to_string)
+               buffer.append(once "昭和" + shouwa.to_string)
             elseif shouwa = 64 then
                if time.month = 1 and time.day < 8 then
-                  buffer.append("昭和64")
+                  buffer.append(once "昭和64")
                else
-                  buffer.append("平成元")
+                  buffer.append(once "平成元")
                end
             elseif shouwa < 94 and time.month < 5 then
-               buffer.append("平成" + (shouwa - 63).to_string)
+               buffer.append(once "平成" + (shouwa - 63).to_string)
             elseif shouwa = 94 then
                if time.month < 5 then
-                  buffer.append("平成31")
+                  buffer.append(once "平成31")
                else
-                  buffer.append("令和元")
+                  buffer.append(once "令和元")
                end
             else
-               buffer.append("令和" + (shouwa - 93).to_string)
+               buffer.append(once "令和" + (shouwa - 93).to_string)
             end
          else
             time.year.append_in(buffer)
@@ -90,7 +90,7 @@ feature {ANY}
          if short_mode then
             buffer.extend(' ')
          else
-            buffer.append("年")
+            buffer.append(once "年")
          end
          month_in(buffer)
          if short_mode then
@@ -98,7 +98,7 @@ feature {ANY}
          end
          time.day.append_in(buffer)
          if not short_mode then
-            buffer.append("日")
+            buffer.append(once "日")
          end
          buffer.extend(' ')
          day_in(buffer)
@@ -107,7 +107,7 @@ feature {ANY}
          if short_mode then
             buffer.extend(':')
          else
-            buffer.append("時")
+            buffer.append(once "時")
          end
          tmp := time.minute.to_string
          if 2 > tmp.count then
@@ -115,12 +115,12 @@ feature {ANY}
          end
          buffer.append_string(tmp)
          if not short_mode then
-            buffer.append("分")
+            buffer.append(once "分")
             tmp := time.second.to_string
             if 2 > tmp.count then
                tmp.insert_character('0', 1)
             end
-            buffer.append_string(tmp + "秒")
+            buffer.append_string(tmp + once "秒")
          end
          buffer.extend(' ')
       end
